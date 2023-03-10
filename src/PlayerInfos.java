@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class PlayerInfos {
     private String name;
-    private int money = 1500;
+    private int money = 1000;
     private int location = 0;
     private ArrayList<PropertyMono> owned = new ArrayList<>();
     private boolean stillPlaying = true;
@@ -21,20 +21,31 @@ public class PlayerInfos {
         return location;
     }
 
-    public void payMoney(int rent, int player){
+    public void payMoney(int rent, boolean skipPayment){
         this.money -= rent;
-        System.out.printf("Player%d: %d\n", player+1, money);
+        if (!skipPayment) {
+
+            System.out.printf("Player: %s: %d\n", name, money);
+        }
         if (money<0) {
             stillPlaying = false;
         }
     }
 
-    public void earnMoney(int rent, int player){
+    public void earnMoney(int rent, boolean skipPayment){
         this.money += rent;
-        System.out.printf("Player%d: %d\n", player+1, money);
+        if (!skipPayment) {
+
+            System.out.printf("Player: %s: %d\n", name, money);
+        }
     }
 
     public boolean isStillPlaying(){
         return stillPlaying;
     }
+
+    public int getMoney(){
+        return money;
+    }
+
 }

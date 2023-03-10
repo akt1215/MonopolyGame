@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PropertyMono {
     private String color;
@@ -14,11 +15,11 @@ public class PropertyMono {
     private int printedPrice;
     private int houseCost;
     private int owner;
-    private ArrayList<PlayerInfos> playerInfos;
+    private HashMap<Integer, PlayerInfos> playerInfos;
 
 
     PropertyMono(String color, String name, int location, int rent, int house1, int house2,
-                 int house3, int house4, int hotel, int printedPrice, int houseCost, int owner, ArrayList playerInfos) {
+                 int house3, int house4, int hotel, int printedPrice, int houseCost, int owner, HashMap playerInfos) {
         this.color = color;
         this.name = name;
         this.location = location;
@@ -43,27 +44,27 @@ public class PropertyMono {
             level = 5;
             switch (level) {
                 case 0:
-                    playerInfos.get(owner).earnMoney(rent, owner);
+                    playerInfos.get(owner).earnMoney(rent, false);
                     return rent;
 
                 case 1:
-                    playerInfos.get(owner).earnMoney(house1, owner);
+                    playerInfos.get(owner).earnMoney(house1, false);
                     return house1;
 
                 case 2:
-                    playerInfos.get(owner).earnMoney(house2, owner);
+                    playerInfos.get(owner).earnMoney(house2, false);
                     return house2;
 
                 case 3:
-                    playerInfos.get(owner).earnMoney(house3, owner);
+                    playerInfos.get(owner).earnMoney(house3, false);
                     return house3;
 
                 case 4:
-                    playerInfos.get(owner).earnMoney(house4, owner);
+                    playerInfos.get(owner).earnMoney(house4, false);
                     return house4;
 
                 case 5:
-                    playerInfos.get(owner).earnMoney(hotel, owner);
+                    playerInfos.get(owner).earnMoney(hotel, false);
                     return hotel;
 
                 default:
@@ -71,5 +72,17 @@ public class PropertyMono {
             }
         }
         return 0;
+    }
+
+    public int getOwner(){
+        return owner;
+    }
+
+    public int getPrintedPrice() {
+        return printedPrice;
+    }
+
+    public void updateOwner(int playerID) {
+        this.owner = playerID;
     }
 }

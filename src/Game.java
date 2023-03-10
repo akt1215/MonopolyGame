@@ -1,10 +1,8 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Game {
     ArrayList<PropertyMono> propertyList = new ArrayList<>();
-    ArrayList<PlayerInfos> playerInfos = new ArrayList<>();
+    HashMap<Integer, PlayerInfos> playerInfos = new HashMap<>();
     int playerNum;
 
     //making the 2d array for the prices of each property
@@ -69,21 +67,33 @@ public class Game {
             "Green", "Green", "Green",
             "Dark Blue", "Dark Blue");
 
-    Game(ArrayList<PlayerInfos> playerInfos) {
+    Game(HashMap<Integer, PlayerInfos> playerInfos) {
         //defining the property class for each property and store the name in the propertyList
+        this.playerInfos = playerInfos;
         for (int i = 0; i < namesOfProperty.size(); i++) {
             propertyList.add(new PropertyMono(colorsOfProperty.get(i), namesOfProperty.get(i), i,
                     propertyPrice[i][0], propertyPrice[i][1], propertyPrice[i][2], propertyPrice[i][3],
-                    propertyPrice[i][4], propertyPrice[i][5], propertyPrice[i][6], propertyPrice[i][7], 1, playerInfos));
+                    propertyPrice[i][4], propertyPrice[i][5], propertyPrice[i][6], propertyPrice[i][7], -1, playerInfos));
         }
     }
 
-    public void getLocInfo(int playerLoc){
+    public void getLocInfo(int playerLoc, int playerID){
         System.out.println(propertyList.get(playerLoc).getInfo());
+
+        if (propertyList.get(playerLoc).getOwner() == -1) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.printf("The cost is %d, and you have %d\n", propertyList.get(playerLoc).getPrintedPrice(), playerInfos.get(playerID).getMoney());
+            System.out.print("Do you want to buy?: ");
+            if (scanner.nextInt() == 1) {
+                playerInfos.get(playerID).payMoney(propertyList.get(playerLoc).getPrintedPrice(), true);
+                propertyList.get(playerLoc).updateOwner(playerID);
+            }
+        }
     }
 
     public int getRents (int playerLoc) {
         return propertyList.get(playerLoc).getRents();
     }
+
 }
 

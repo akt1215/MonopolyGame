@@ -1,16 +1,13 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        ArrayList<PlayerInfos> playerInfos = new ArrayList<>();
+        HashMap<Integer, PlayerInfos> playerInfos = new HashMap<>();
         int playerNum;
         int playerLoc;
         int rents;
-        ArrayList<Integer> loser = new ArrayList<>();
+        ArrayList<Integer> playerID = new ArrayList<>();
 
         //Player infos
         System.out.print("How many players: ");
@@ -21,25 +18,25 @@ public class Main {
 
         for (int i = 0; i < playerNum; i++) {
             System.out.printf("Player%d type your name: ", i + 1);
-            playerInfos.add(new PlayerInfos(sc.nextLine()));
+            playerInfos.put(i, new PlayerInfos(sc.nextLine()));
+            playerID.add(i);
         }
 
         while (playerInfos.size()>=2) {
-            for (int i = 0; i < playerNum; i++) {
+            for (int i = 0; i < playerID.size(); i++) {
                 if (playerInfos.size()>=2) {
                     //when player stops at the property
-                    playerLoc = playerInfos.get(i).getLocation();
-                    game.getLocInfo(playerLoc);
+                    playerLoc = playerInfos.get(playerID.get(i)).getLocation();
+                    game.getLocInfo(playerLoc, playerID.get(i));
                     rents = game.getRents(playerLoc);
-                    playerInfos.get(i).payMoney(rents, i);
+                    playerInfos.get(playerID.get(i)).payMoney(rents, false);
 
-                    if (!playerInfos.get(i).isStillPlaying()) {
-                        loser.add(i);
+                    if (!playerInfos.get(playerID.get(i)).isStillPlaying()) {
+                        playerInfos.remove(playerID.get(i));
+                        playerID.remove(i);
+                        i--;
                     }
                 }
-            }
-            for (int t = 0; t < loser.size(); t++) {
-                playerInfos.remove(t);
             }
         }
         sc.close();

@@ -121,8 +121,6 @@ public class PlayerInfos {
             if (currentColorNumOfProperty.get(owned.get(i).getColor()) == colorNumOfProperty.get(owned.get(i).getColor())) {
 
                 //some kind of error here
-
-                scanner.nextLine();
                 System.out.printf("Building house at %s\n", owned.get(i).getColor());
                 if (scanner.nextInt() == 1) {
 
@@ -178,7 +176,6 @@ public class PlayerInfos {
                         propertyMonoInfo.get(propertyID+addPropertyID).updateHousing();
                     }
                 }
-
                 scanner.close();
             }
         }

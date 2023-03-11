@@ -42,7 +42,6 @@ public class Main {
                     }
                 }
             }
-        }
-        sc.close();
+        }sc.close();
     }
 }

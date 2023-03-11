@@ -67,6 +67,9 @@ public class Game {
             "Green", "Green", "Green",
             "Dark Blue", "Dark Blue");
 
+    //making the hashmap for the number of properties for each color
+    HashMap<String, Integer> colorNumOfProperty = new HashMap<>();
+
     Game(HashMap<Integer, PlayerInfos> playerInfos) {
         //defining the property class for each property and store the name in the propertyList
         this.playerInfos = playerInfos;
@@ -75,6 +78,15 @@ public class Game {
                     propertyPrice[i][0], propertyPrice[i][1], propertyPrice[i][2], propertyPrice[i][3],
                     propertyPrice[i][4], propertyPrice[i][5], propertyPrice[i][6], propertyPrice[i][7], -1, playerInfos));
         }
+        colorNumOfProperty.put("Brown", 2);
+        colorNumOfProperty.put("Light Blue", 3);
+        colorNumOfProperty.put("Pink", 3);
+        colorNumOfProperty.put("Orange", 3);
+        colorNumOfProperty.put("Red", 3);
+        colorNumOfProperty.put("Yellow", 3);
+        colorNumOfProperty.put("Green", 3);
+        colorNumOfProperty.put("Dark Blue", 2);
+
     }
 
     public void getLocInfo(int playerLoc, int playerID){
@@ -86,7 +98,8 @@ public class Game {
             System.out.print("Do you want to buy?: ");
             if (scanner.nextInt() == 1) {
                 playerInfos.get(playerID).payMoney(propertyList.get(playerLoc).getPrintedPrice(), true);
-                propertyList.get(playerLoc).updateOwner(playerID);
+                propertyList.get(playerLoc).updateOwner(playerID, true);
+                playerInfos.get(playerID).updateOwned(propertyList.get(playerLoc), true);
             }
         }
     }
@@ -94,6 +107,8 @@ public class Game {
     public int getRents (int playerLoc) {
         return propertyList.get(playerLoc).getRents();
     }
-
+    public HashMap getColorNumOfProperty(){
+        return colorNumOfProperty;
+    }
 }
 

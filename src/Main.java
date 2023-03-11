@@ -15,10 +15,12 @@ public class Main {
         sc.nextLine();
 
         Game game = new Game(playerInfos);
+        ArrayList<PropertyMono> propertyMonoHash = new ArrayList<>();
+        propertyMonoHash = game.propertyList;
 
         for (int i = 0; i < playerNum; i++) {
             System.out.printf("Player%d type your name: ", i + 1);
-            playerInfos.put(i, new PlayerInfos(sc.nextLine()));
+            playerInfos.put(i, new PlayerInfos(sc.nextLine(), i, propertyMonoHash));
             playerID.add(i);
         }
 
@@ -26,6 +28,8 @@ public class Main {
             for (int i = 0; i < playerID.size(); i++) {
                 if (playerInfos.size()>=2) {
                     //when player stops at the property
+                    System.out.println();
+                    System.out.printf("%s's turn\n", playerInfos.get(playerID.get(i)).getName());
                     playerLoc = playerInfos.get(playerID.get(i)).getLocation();
                     game.getLocInfo(playerLoc, playerID.get(i));
                     rents = game.getRents(playerLoc);

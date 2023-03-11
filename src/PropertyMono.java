@@ -36,12 +36,21 @@ public class PropertyMono {
     }
 
     public String getInfo(){
-        return String.format("%s (%s), %d...%d->%d", this.name, this.color, this.location, this.rent, this.hotel);
+        String ownerName;
+        switch (owner) {
+            case -1:
+                ownerName = "None";
+                break;
+            default:
+                ownerName = playerInfos.get(owner).getName();
+                break;
+        }
+        return String.format("%s (%s), %d: %s...%d->%d", this.name, this.color, this.location, ownerName, this.rent, this.hotel);
     }
 
     public int getRents() {
         if (owner != -1) {
-            level = 5;
+            level = 1;
             switch (level) {
                 case 0:
                     playerInfos.get(owner).earnMoney(rent, false);
@@ -82,7 +91,50 @@ public class PropertyMono {
         return printedPrice;
     }
 
-    public void updateOwner(int playerID) {
-        this.owner = playerID;
+    public void updateOwner(int playerID, boolean isBuying) {
+        if (isBuying) {
+            //when buying
+            this.owner = playerID;
+        } else {
+            //when selling
+            this.owner = -1;
+        }
+    }
+
+    public String getColor(){
+        return color;
+    }
+
+    public String getPropertyHouseInfo(){
+        int futureHouse;
+        switch (level) {
+            case 0:
+                futureHouse = house1;
+                break;
+            case 1:
+                futureHouse = house2;
+                break;
+            case 2:
+                futureHouse = house3;
+                break;
+            case 3:
+                futureHouse = house4;
+                break;
+            case 4:
+                futureHouse = hotel;
+                break;
+            default:
+                futureHouse = house1;
+                break;
+
+        }
+        return String.format("Current: %d, Cost: %d, Price: %d", level, houseCost, futureHouse);
+    }
+
+    public void updateHousing() {
+        if (level < 6) {
+
+            level += 1;
+        }
     }
 }

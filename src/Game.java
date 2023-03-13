@@ -100,7 +100,7 @@ public class Game {
             if (scanner.nextInt() == 1) {
                 playerInfos.get(playerID).payMoney(propertyList.get(playerLoc).getPrintedPrice(), true);
                 propertyList.get(playerLoc).updateOwner(playerID, true);
-                playerInfos.get(playerID).updateOwned(propertyList.get(playerLoc), true);
+                playerInfos.get(playerID).updateOwned(propertyList.get(playerLoc), true, true);
             }
         }
     }

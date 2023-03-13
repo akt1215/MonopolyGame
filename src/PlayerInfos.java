@@ -96,7 +96,7 @@ public class PlayerInfos {
         return money;
     }
 
-    public void updateOwned(PropertyMono propertyID, boolean isBuying) {
+    public void updateOwned(PropertyMono propertyID, boolean isBuying, boolean extraInfo) {
         if (isBuying) {
             //adding properties to the list when the player bought the property
             owned.add(propertyID);
@@ -104,12 +104,20 @@ public class PlayerInfos {
             //updating the color count
             colorCount = currentColorNumOfProperty.get(propertyID.getColor());
             currentColorNumOfProperty.replace(propertyID.getColor(), colorCount+1);
+            if (extraInfo) {
 
-            System.out.println(currentColorNumOfProperty);
+                System.out.println(currentColorNumOfProperty);
+            }
             checkOwnedProperty();
         } else {
-            //removing a properties when selling the property
             owned.remove(propertyID);
+            //updating the color count
+            colorCount = currentColorNumOfProperty.get(propertyID.getColor());
+            currentColorNumOfProperty.replace(propertyID.getColor(), colorCount-1);
+            if (extraInfo) {
+
+                System.out.println(currentColorNumOfProperty);
+            }
         }
     }
 
@@ -313,8 +321,8 @@ public class PlayerInfos {
 
     }
 
-    public void updateOwner(int propertyID, boolean isBuying) {
+    public void updateOwner(int newOwner, int propertyID, boolean isBuying) {
         //when buying
-        owned.get(propertyID).updateOwner(playerID, isBuying);
+        owned.get(propertyID).updateOwner(newOwner, isBuying);
     }
 }

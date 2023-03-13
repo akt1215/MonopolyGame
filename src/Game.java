@@ -94,6 +94,7 @@ public class Game {
 
         if (propertyList.get(playerLoc).getOwner() == -1) {
             Scanner scanner = new Scanner(System.in);
+            System.out.println(playerInfos.get(playerID).getCurrentColorNumOfProperty());
             System.out.printf("The cost is %d, and you have %d\n", propertyList.get(playerLoc).getPrintedPrice(), playerInfos.get(playerID).getMoney());
             System.out.print("Do you want to buy?: ");
             if (scanner.nextInt() == 1) {
@@ -109,6 +110,9 @@ public class Game {
     }
     public HashMap getColorNumOfProperty(){
         return colorNumOfProperty;
+    }
+    public ArrayList getPropertyList() {
+        return propertyList;
     }
 }
 

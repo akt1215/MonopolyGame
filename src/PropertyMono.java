@@ -11,7 +11,7 @@ public class PropertyMono {
     private int house3;
     private int house4;
     private int hotel;
-    private int level;
+    private int level = 0;
     private int printedPrice;
     private int houseCost;
     private int owner;
@@ -50,7 +50,6 @@ public class PropertyMono {
 
     public int getRents() {
         if (owner != -1) {
-            level = 1;
             switch (level) {
                 case 0:
                     playerInfos.get(owner).earnMoney(rent, false);
@@ -83,6 +82,24 @@ public class PropertyMono {
         return 0;
     }
 
+/*    public int futureRents() {
+        level = 1;
+        switch (level) {
+            case 0:
+                return house1;
+            case 1:
+                return house2;
+            case 2:
+                return house3;
+            case 3:
+                return house4;
+            case 4:
+                return hotel;
+            default:
+                return 0;
+            }
+    }*/
+
     public int getOwner(){
         return owner;
     }
@@ -106,35 +123,52 @@ public class PropertyMono {
     }
 
     public String getPropertyHouseInfo(){
+        int currentHouse;
         int futureHouse;
         switch (level) {
             case 0:
+                currentHouse = rent;
                 futureHouse = house1;
                 break;
             case 1:
+                currentHouse = house1;
                 futureHouse = house2;
                 break;
             case 2:
+                currentHouse = house2;
                 futureHouse = house3;
                 break;
             case 3:
+                currentHouse = house3;
                 futureHouse = house4;
                 break;
             case 4:
+                currentHouse = house4;
                 futureHouse = hotel;
                 break;
             default:
-                futureHouse = house1;
+                currentHouse = hotel;
+                futureHouse = hotel;
                 break;
 
         }
-        return String.format("Current: %d, Cost: %d, Price: %d", level, houseCost, futureHouse);
+        return String.format("%s: Current level: %d, Rent: %d -> %d, Cost: %d", name, level, currentHouse, futureHouse, houseCost);
     }
 
     public void updateHousing() {
-        if (level < 6) {
+        if (level < 5) {
 
             level += 1;
         }
+    }
+
+    public int getLevel() {
+        return level;
+    }
+    public int getHouseCost(){
+        return houseCost;
+    }
+    public String getName(){
+        return name;
     }
 }

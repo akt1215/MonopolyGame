@@ -5,6 +5,8 @@ public class PlayerInfos {
     private int money = 1000;
     private int location = 0;
     private ArrayList<PropertyMono> owned = new ArrayList<>();
+    private int payment;
+    public int rent;
     int playerID;
     int colorCount;
     private boolean stillPlaying = true;
@@ -65,23 +67,37 @@ public class PlayerInfos {
     }
 
     public void payMoney(int rent, boolean skipPayment){
+        this.rent = rent;
 
-        this.money -= rent;
-        if (!skipPayment) {
+        if (this.rent > money){
 
-            System.out.printf("Player: %s: %d\n", name, money);
-        }
-        if (money<0) {
-            stillPlaying = false;
-            for (int i = 0; i < owned.size(); i++) {
-                owned.get(i).updateOwner(playerID, false);
+            if (aboutToLose()) {
+                this.money -= this.rent;
+                if (!skipPayment) {
+
+                    System.out.printf("Player: %s: %d\n", name, money);
+                }
+            } else {
+                stillPlaying = false;
+                payment = money;
+                money = 0;
+                for (int i = 0; i < owned.size(); i++) {
+                    owned.get(i).updateOwner(playerID, false);
+                }
+                owned.clear();
             }
-            owned.clear();
+        } else{
+
+            this.money -= this.rent;
+            if (!skipPayment) {
+
+                System.out.printf("Player: %s: %d\n", name, money);
+            }
         }
     }
 
-    public void earnMoney(int rent, boolean skipPayment){
-        this.money += rent;
+    public void earnMoney(int payment, boolean skipPayment){
+        this.money += payment;
         if (!skipPayment) {
 
             System.out.printf("Player: %s: %d\n", name, money);
@@ -96,7 +112,7 @@ public class PlayerInfos {
         return money;
     }
 
-    public void updateOwned(PropertyMono propertyID, boolean isBuying, boolean extraInfo) {
+    public void updateOwned(PropertyMono propertyID, boolean isBuying, boolean isSelling, boolean extraInfo) {
         if (isBuying) {
             //adding properties to the list when the player bought the property
             owned.add(propertyID);
@@ -115,8 +131,11 @@ public class PlayerInfos {
             colorCount = currentColorNumOfProperty.get(propertyID.getColor());
             currentColorNumOfProperty.replace(propertyID.getColor(), colorCount-1);
             if (extraInfo) {
-
                 System.out.println(currentColorNumOfProperty);
+            }
+
+            if (isSelling) {
+                money += propertyID.getPrintedPrice() / 2;
             }
         }
     }
@@ -321,8 +340,41 @@ public class PlayerInfos {
 
     }
 
-    public void updateOwner(int newOwner, int propertyID, boolean isBuying) {
+    public boolean aboutToLose() {
+
+        Scanner sc = new Scanner(System.in);
+
+        while (!owned.isEmpty()) {
+
+            while (money < rent) {
+
+                System.out.print("You don't have enough money. Do you want to sell your property: ");
+                int doSell = sc.nextInt();
+
+                switch (doSell) {
+                    case 1:
+                        System.out.println("Chose which property to sell");
+                        for (PropertyMono propertyMono : owned) {
+                            System.out.printf("%d: %s\n", owned.indexOf(propertyMono), propertyMono.getInfo());
+                        }
+                        int sellProperty = sc.nextInt();
+                        money += owned.get(sellProperty).getPrintedPrice() / 2;
+                        updateOwned(owned.get(sellProperty), false, true, true);
+                        System.out.printf("You have %d\n", money);
+                        break;
+                    default:
+                        break;
+
+                }
+            }
+            return true;
+        }
+        return false;
+
+    }
+
+    /*public void updateOwner(int newOwner, int propertyID, boolean isBuying) {
         //when buying
         owned.get(propertyID).updateOwner(newOwner, isBuying);
-    }
+    }*/
 }

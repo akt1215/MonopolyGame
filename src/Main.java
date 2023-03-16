@@ -108,9 +108,9 @@ public class Main {
 
                                                                 // also update the owned list for each of the player
 
-                                                                playerInfos.get(playerID.get(i)).updateOwned(traderOwned.get(tradingPropertyID), true, false);
+                                                                playerInfos.get(playerID.get(i)).updateOwned(traderOwned.get(tradingPropertyID), true, false, false);
                                                                 playerInfos.get(playerID.get(i)).payMoney(tradeMoney, true);
-                                                                playerInfos.get(tradingPlayer).updateOwned(traderOwned.get(tradingPropertyID), false, false);
+                                                                playerInfos.get(tradingPlayer).updateOwned(traderOwned.get(tradingPropertyID), false, false, false);
                                                                 playerInfos.get(tradingPlayer).earnMoney(tradeMoney, true);
 
                                                                 System.out.println("After");
@@ -175,11 +175,11 @@ public class Main {
 
                                                                     // also update the owned list for each of the player
 
-                                                                    playerInfos.get(playerID.get(i)).updateOwned(playerTradingProperty, false, false);
-                                                                    playerInfos.get(playerID.get(i)).updateOwned(traderOwned.get(tradingPropertyID), true, false);
+                                                                    playerInfos.get(playerID.get(i)).updateOwned(playerTradingProperty, false, false, false);
+                                                                    playerInfos.get(playerID.get(i)).updateOwned(traderOwned.get(tradingPropertyID), true, false, false);
 
-                                                                    playerInfos.get(tradingPlayer).updateOwned(traderOwned.get(tradingPropertyID), false, false);
-                                                                    playerInfos.get(tradingPlayer).updateOwned(playerTradingProperty, true, false);
+                                                                    playerInfos.get(tradingPlayer).updateOwned(traderOwned.get(tradingPropertyID), false, false, false);
+                                                                    playerInfos.get(tradingPlayer).updateOwned(playerTradingProperty, true, false, false);
 
 
                                                                     System.out.println("After");
@@ -249,11 +249,11 @@ public class Main {
 
                                                                     // also update the owned list for each of the player
 
-                                                                    playerInfos.get(playerID.get(i)).updateOwned(playerTradingProperty, false, false);
-                                                                    playerInfos.get(playerID.get(i)).updateOwned(traderOwned.get(tradingPropertyID), true, false);
+                                                                    playerInfos.get(playerID.get(i)).updateOwned(playerTradingProperty, false, false, false);
+                                                                    playerInfos.get(playerID.get(i)).updateOwned(traderOwned.get(tradingPropertyID), true, false, false);
                                                                     playerInfos.get(playerID.get(i)).payMoney(tradeMoney, true);
-                                                                    playerInfos.get(tradingPlayer).updateOwned(traderOwned.get(tradingPropertyID), false, false);
-                                                                    playerInfos.get(tradingPlayer).updateOwned(playerTradingProperty, true, false);
+                                                                    playerInfos.get(tradingPlayer).updateOwned(traderOwned.get(tradingPropertyID), false, false, false);
+                                                                    playerInfos.get(tradingPlayer).updateOwned(playerTradingProperty, true, false, false);
                                                                     playerInfos.get(tradingPlayer).earnMoney(tradeMoney, true);
 
                                                                     System.out.println("After");
@@ -309,7 +309,9 @@ public class Main {
                 }
             }
 
-        }sc.close();
+        }
+        System.out.printf("%s won", playerInfos.get(playerID.get(0)).getName());
+        sc.close();
 
     }
 }
